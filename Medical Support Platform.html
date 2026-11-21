@@ -1,0 +1,439 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Decision Support System</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #eef4f8;
+            color: #263746;
+        }
+
+        header {
+            background: #087f8c;
+            color: white;
+            text-align: center;
+            padding: 25px 15px;
+        }
+
+        header h1 {
+            margin-bottom: 10px;
+            font-size: 27px;
+        }
+
+        header p {
+            font-size: 14px;
+        }
+
+        .container {
+            max-width: 750px;
+            margin: 30px auto;
+            padding: 25px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px #00000015;
+        }
+
+        h2 {
+            color: #087f8c;
+            margin-bottom: 20px;
+        }
+
+        .field {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid #bdcbd4;
+            border-radius: 6px;
+            font-size: 15px;
+        }
+
+        .symptoms {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .symptoms label {
+            font-weight: normal;
+            background: #f2f8fa;
+            padding: 12px;
+            border-radius: 6px;
+            margin: 0;
+        }
+
+        .symptoms input {
+            margin-right: 8px;
+        }
+
+        button {
+            width: 100%;
+            padding: 13px;
+            background: #087f8c;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #066570;
+        }
+
+        #result {
+            display: none;
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: 8px;
+            background: #e9f7f7;
+            border-left: 5px solid #087f8c;
+        }
+
+        #result h3 {
+            margin-bottom: 12px;
+            color: #087f8c;
+        }
+
+        #result p {
+            margin: 10px 0;
+            line-height: 1.5;
+            white-space: pre-line;
+        }
+
+        .warning {
+            margin-top: 20px;
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 6px;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #5c6b75;
+            font-size: 13px;
+        }
+
+        @media (max-width: 500px) {
+            .container {
+                margin: 15px;
+                padding: 18px;
+            }
+
+            .symptoms {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>Medical Decision Support System</h1>
+    <p>A Simple Symptom-Based Health Information Tool</p>
+</header>
+
+<div class="container">
+
+    <h2>Patient Information</h2>
+
+    <form id="medicalForm">
+
+        <div class="field">
+            <label for="patientName">Patient Name</label>
+            <input type="text" id="patientName" placeholder="Enter patient name"
+                   maxlength="60" required>
+        </div>
+
+        <div class="field">
+            <label for="age">Patient Age</label>
+            <input type="number" id="age" min="1" max="120"
+                   placeholder="Enter age" required>
+        </div>
+
+        <div class="field">
+            <label for="gender">Gender</label>
+            <select id="gender" required>
+                <option value="">Select gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other / Prefer not to say</option>
+            </select>
+        </div>
+
+        <div class="field">
+            <label for="phone">Mobile Number</label>
+            <input type="tel" id="phone" placeholder="Enter mobile number"
+                   maxlength="15" pattern="[0-9+()\\- ]{7,15}">
+        </div>
+
+        <div class="field">
+            <label for="bloodGroup">Blood Group</label>
+            <select id="bloodGroup">
+                <option value="">Select blood group (optional)</option>
+                <option>A+</option><option>A-</option>
+                <option>B+</option><option>B-</option>
+                <option>AB+</option><option>AB-</option>
+                <option>O+</option><option>O-</option>
+                <option>Not known</option>
+            </select>
+        </div>
+
+        <div class="field">
+            <label for="visitDate">Date of Visit</label>
+            <input type="date" id="visitDate">
+        </div>
+
+        <div class="field">
+            <label>Select Symptoms</label>
+
+            <div class="symptoms">
+                <label>
+                    <input type="checkbox" name="symptom"
+                           value="fever">
+                    Fever
+                </label>
+
+                <label>
+                    <input type="checkbox" name="symptom"
+                           value="cough">
+                    Cough
+                </label>
+
+                <label>
+                    <input type="checkbox" name="symptom"
+                           value="headache">
+                    Headache
+                </label>
+
+                <label>
+                    <input type="checkbox" name="symptom"
+                           value="fatigue">
+                    Fatigue
+                </label>
+
+                <label>
+                    <input type="checkbox" name="symptom"
+                           value="sorethroat">
+                    Sore throat
+                </label>
+
+                <label>
+                    <input type="checkbox" name="symptom"
+                           value="sneezing">
+                    Sneezing / Runny nose
+                </label>
+
+                <label>
+                    <input type="checkbox" name="symptom"
+                           value="nausea">
+                    Nausea
+                </label>
+
+                <label>
+                    <input type="checkbox" name="symptom"
+                           value="bodyache">
+                    Body ache
+                </label>
+            </div>
+        </div>
+
+        <button type="submit">Analyze Symptoms</button>
+
+    </form>
+
+    <div id="result" aria-live="polite">
+        <h3>Assessment Result</h3>
+        <p id="condition"></p>
+        <p id="advice"></p>
+        <p id="urgency"></p>
+    </div>
+
+    <div class="warning">
+        <strong>Disclaimer:</strong>
+        This educational project does not diagnose diseases or replace
+        a qualified healthcare professional. Results are illustrative
+        symptom-pattern suggestions only. Seek professional medical
+        advice for symptoms that concern you.
+    </div>
+
+</div>
+
+<footer>
+    Mini Project | Medical Decision Support System
+</footer>
+
+<script>
+    const form = document.getElementById("medicalForm");
+
+    form.addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        const patientName = document.getElementById("patientName").value.trim();
+        const age = Number(document.getElementById("age").value);
+        const gender = document.getElementById("gender").value;
+        const phone = document.getElementById("phone").value.trim();
+        const bloodGroup = document.getElementById("bloodGroup").value;
+        const visitDate = document.getElementById("visitDate").value;
+
+        const selected = Array.from(
+            document.querySelectorAll(
+                'input[name="symptom"]:checked'
+            )
+        ).map(item => item.value);
+
+        if (!patientName || !age || age < 1 || age > 120 || !gender) {
+            alert("Please enter the patient name, a valid age, and gender.");
+            return;
+        }
+
+        if (selected.length === 0) {
+            alert("Please select at least one symptom.");
+            return;
+        }
+
+        let condition = "";
+        let advice = "";
+        let urgency = "";
+
+        const has = symptom => selected.includes(symptom);
+
+        // Emergency warning signs require urgent assessment.
+        // This simple demo cannot reliably detect emergencies
+        // from the selected symptoms alone.
+
+        if (has("fever") && has("cough") &&
+            has("sorethroat") && has("fatigue")) {
+
+            condition =
+                "Pattern observed: Flu-like or respiratory illness.";
+
+            advice =
+                "Several respiratory symptoms are selected. " +
+                "Consider contacting a healthcare professional, " +
+                "especially if symptoms are worsening.";
+
+            urgency =
+                "Priority: Medical advice may be appropriate.";
+
+        } else if (has("sneezing") && has("cough") &&
+                   !has("fever")) {
+
+            condition =
+                "Pattern observed: Common cold or allergy-like symptoms.";
+
+            advice =
+                "Consider rest and fluids. A healthcare professional " +
+                "can help distinguish allergies from an infection.";
+
+            urgency =
+                "Priority: Monitor symptoms and seek advice if concerned.";
+
+        } else if (has("fever") && has("bodyache")) {
+
+            condition =
+                "Pattern observed: Fever with body aches.";
+
+            advice =
+                "These symptoms have several possible causes, " +
+                "including infections. Consider a clinical assessment.";
+
+            urgency =
+                "Priority: Seek medical advice if symptoms persist or worsen.";
+
+        } else if (has("headache") && has("fatigue")) {
+
+            condition =
+                "Pattern observed: Headache with fatigue.";
+
+            advice =
+                "Possible causes vary widely. Rest and hydration may help, " +
+                "but persistent or unusual symptoms need medical assessment.";
+
+            urgency =
+                "Priority: Seek advice if symptoms are persistent or concerning.";
+
+        } else if (has("nausea")) {
+
+            condition =
+                "Pattern observed: Nausea.";
+
+            advice =
+                "Nausea has many possible causes. Take small sips of fluids " +
+                "if tolerated and seek medical advice if it continues.";
+
+            urgency =
+                "Priority: Prompt assessment is needed for severe pain, " +
+                "repeated vomiting, dehydration, or worsening symptoms.";
+
+        } else {
+            condition =
+                "Pattern observed: " + selected.map(s =>
+                    s === "sorethroat" ? "sore throat" :
+                    s === "bodyache" ? "body ache" :
+                    s
+                ).join(", ") + ".";
+
+            advice =
+                "The selected symptoms are not enough to identify a cause. " +
+                "A healthcare professional can assess your symptoms and history.";
+
+            urgency =
+                "Priority: Monitor your symptoms and seek medical advice " +
+                "if they persist, worsen, or concern you.";
+        }
+
+        // Age is collected for the project but is not used to
+        // establish a diagnosis or determine clinical risk.
+        document.getElementById("condition").textContent =
+            "Patient: " + patientName +
+            " | Age: " + age +
+            " | Gender: " + gender +
+            (phone ? " | Mobile: " + phone : "") +
+            (bloodGroup ? " | Blood group: " + bloodGroup : "") +
+            (visitDate ? " | Visit date: " + visitDate : "") +
+            "\\nSymptom summary: " + condition;
+
+        document.getElementById("advice").textContent =
+            "Suggested next step: " + advice;
+
+        document.getElementById("urgency").textContent =
+            urgency;
+
+        const result = document.getElementById("result");
+        result.style.display = "block";
+        result.scrollIntoView({
+            behavior: "smooth",
+            block: "nearest"
+        });
+    });
+</script>
+
+</body>
+</html>
+
